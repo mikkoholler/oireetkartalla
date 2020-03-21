@@ -11,6 +11,8 @@ import PrintIcon from "@material-ui/icons/Print";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import EditIcon from "@material-ui/icons/Edit";
+import { SymptomsMenu } from "./components/Symptoms/SymptomsMenu";
+import styled from "styled-components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -69,9 +71,7 @@ function App() {
 
   return (
     <div className="App" style={{ height: "100vh", width: "100%" }}>
-      {showSymptomsMenu && (
-        <SymptomsMenu closeSymptomsMenu={onClick} />
-      )}
+      {showSymptomsMenu && <SymptomsMenu closeSymptomsMenu={onClick} />}
       <Navi>
         <div onClick={() => onClick()}>Omat oireeni</div>
       </Navi>
@@ -100,7 +100,7 @@ function App() {
       </SpeedDial>
     </div>
   );
-};
+}
 
 const Navi = styled.div`
   display: flex;
