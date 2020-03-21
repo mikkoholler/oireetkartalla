@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import GoogleMapReact from "google-map-react";
 import { makeStyles } from "@material-ui/core/styles";
@@ -35,7 +35,25 @@ const actions = [
 
 function App() {
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [hasPosition, setHasPosition] = useState(false);
+  const [latitude, setLatitude] = useState(-25.363882);
+  const [longitude, setLongitude] = useState(131.044922);
+
+  useEffect(() => {
+    if (navigator.geolocation && !hasPosition) {
+      setHasPosition(true);
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          setLatitude(pos.coords.latitude);
+          setLongitude(pos.coords.longitude);
+          alert("Latitude : " + latitude + " Longitude: " + longitude);
+        },
+        () => {},
+        { timeout: 5000 }
+      );
+    }
+  }, [latitude, longitude, hasPosition]);
 
   const handleOpen = () => {
     setOpen(true);
@@ -48,8 +66,8 @@ function App() {
     <div className="App" style={{ height: "100vh", width: "100%" }}>
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw" }}
-        defaultZoom={2}
-        defaultCenter={{ lat: -25.363882, lng: 131.044922 }}
+        defaultZoom={11}
+        center={{ lat: latitude, lng: longitude }}
       ></GoogleMapReact>
       <SpeedDial
         ariaLabel="SpeedDial openIcon example"
