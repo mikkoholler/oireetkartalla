@@ -1,6 +1,6 @@
 import * as express from "express";
 import * as path from "path";
-import favicon from "express-favicon";
+import * as favicon from "express-favicon";
 
 const app = express();
 
