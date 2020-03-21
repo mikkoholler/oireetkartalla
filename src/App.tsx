@@ -11,6 +11,8 @@ import PrintIcon from "@material-ui/icons/Print";
 import ShareIcon from "@material-ui/icons/Share";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import EditIcon from "@material-ui/icons/Edit";
+import { SymptomsMenu } from "./components/Symptoms/SymptomsMenu";
+import styled from "styled-components";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -62,8 +64,18 @@ function App() {
   const handleClose = () => {
     setOpen(false);
   };
+
+  const [showSymptomsMenu, toggleSymptomsMenu] = useState<boolean>(false);
+
+  const onClick = () => toggleSymptomsMenu(!showSymptomsMenu);
+
   return (
     <div className="App" style={{ height: "100vh", width: "100%" }}>
+      {showSymptomsMenu && <SymptomsMenu closeSymptomsMenu={onClick} />}
+      <Navi>
+        <div onClick={() => onClick()}>Omat oireeni</div>
+      </Navi>
+
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw" }}
         defaultZoom={11}
@@ -89,5 +101,24 @@ function App() {
     </div>
   );
 }
+
+const Navi = styled.div`
+  display: flex;
+  bottom: 0;
+  position: absolute;
+  z-index: 1;
+
+  & > div {
+    padding: 1rem;
+    margin: 1rem;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 10px;
+    background: hsla(0, 0%, 100%, 0.9);
+    font-family: "Roboto";
+    text-transform: uppercase;
+    box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
+  }
+`;
 
 export default App;
