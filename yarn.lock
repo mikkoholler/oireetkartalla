@@ -1613,11 +1613,12 @@
     "@types/react" "*"
 
 "@types/react-native@*":
-  version "0.61.23"
-  resolved "https://registry.yarnpkg.com/@types/react-native/-/react-native-0.61.23.tgz#bff4e0311c229a5203eb37aacd4febf59f3e2980"
-  integrity sha512-upHmySsrVBDBokWWhYIKkKnpvadsHdioSjbBTu4xl7fjN0yb94KR5ngUOBXsyqAYqQzF+hP6qpvobG9M7Jr6hw==
-  dependencies:
-    "@types/react" "*"
+  version "0.0.0"
+  uid ""
+
+"@types/react-native@link:./empty-package":
+  version "0.0.0"
+  uid ""
 
 "@types/react-transition-group@^4.2.0":
   version "4.2.4"

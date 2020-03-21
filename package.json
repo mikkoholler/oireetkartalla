@@ -29,6 +29,9 @@
     "styled-components": "^5.0.1",
     "typescript": "~3.7.2"
   },
+  "resolutions": {
+    "@types/react-native": "link:./empty-package"
+  },
   "scripts": {
     "tsc": "tsc",
     "server": "tsc server.ts && node server.js",
