@@ -4,6 +4,10 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `yarn server`
+
+Serve build from [http://localhost:5000](http://localhost:5000) with local server.
+
 ### `yarn dev`
 
 Runs the app in the development mode.<br />
