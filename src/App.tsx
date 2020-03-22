@@ -63,7 +63,6 @@ function App() {
           setLatitude(pos.coords.latitude);
           setLongitude(pos.coords.longitude);
           setZoomLevel(DEFAULT_ZOOM_LEVEL);
-          alert("Latitude : " + latitude + " Longitude: " + longitude);
         },
         (e) => {
           console.error(e);
