@@ -10,8 +10,6 @@ CREATE TABLE symptoms
     report_time timestamp
     without time zone DEFAULT now
     () NOT NULL,
-    latitude float,
-    longitude float,
-    symptom_key text,
-    symptom_value text
+    postal_code text,
+    symptom jsonb,
 );
