@@ -35,8 +35,8 @@ export const SymptomTable = () => {
 
   console.log("ANS", answers);
 
-  const onChange = (e: React.ChangeEvent) => {
-    const el = e.target as HTMLInputElement;
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const el = e.target
     setAnswers({
       ...answers,
       [el.name]: el.value
