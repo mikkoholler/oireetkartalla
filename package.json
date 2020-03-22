@@ -70,5 +70,6 @@
     "node-sass": "^4.13.1",
     "prettier": "^2.0.1",
     "ts-node": "^8.7.0"
-  }
+  },
+  "proxy": "http://localhost:5000"
 }
