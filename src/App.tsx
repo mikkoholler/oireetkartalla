@@ -35,12 +35,15 @@ const actions = [
   { icon: <FavoriteIcon />, name: "Like" }
 ];
 
+const DEFAULT_ZOOM_LEVEL = 11;
+
 function App() {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
   const [hasPosition, setHasPosition] = useState(false);
-  const [latitude, setLatitude] = useState(-25.363882);
-  const [longitude, setLongitude] = useState(131.044922);
+  const [latitude, setLatitude] = useState(66.052978);
+  const [longitude, setLongitude] = useState(26.184390);
+  const [zoomLevel, setZoomLevel] = useState(5.25)
 
   useEffect(() => {
     if (navigator.geolocation && !hasPosition) {
@@ -49,9 +52,12 @@ function App() {
         pos => {
           setLatitude(pos.coords.latitude);
           setLongitude(pos.coords.longitude);
+          setZoomLevel(DEFAULT_ZOOM_LEVEL);
           alert("Latitude : " + latitude + " Longitude: " + longitude);
         },
-        () => {},
+        (e) => {
+          console.error(e);
+        },
         { timeout: 5000 }
       );
     }
@@ -78,7 +84,7 @@ function App() {
 
       <GoogleMapReact
         bootstrapURLKeys={{ key: "AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw" }}
-        defaultZoom={11}
+        zoom={zoomLevel}
         center={{ lat: latitude, lng: longitude }}
       ></GoogleMapReact>
       <SpeedDial
