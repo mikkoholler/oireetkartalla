@@ -1,5 +1,17 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Setting up
+
+Put the following in `.env`:
+
+```
+REACT_APP_FIREBASE_API_KEY=<secret>
+REACT_APP_FIREBASE_AUTH_DOMAIN=oireetkartalla-271820.firebaseapp.com
+REACT_APP_FIREBASE_PROJECT_ID=oireetkartalla-271820
+REACT_APP_FIREBASE_APP_ID=1:837135327767:web:d5a90b88a79003540bb252
+DB_URL="postgres://oireet:kartalla@localhost:5432/oireetkartalla"
+```
+
 ## Available Scripts
 
 In the project directory, you can run:

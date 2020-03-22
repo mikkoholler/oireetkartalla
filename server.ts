@@ -1,6 +1,11 @@
+/* eslint-disable import/first */
+import * as dotenv from 'dotenv'
+dotenv.config()
+
 import * as express from 'express'
 import * as path from 'path'
 import * as favicon from 'express-favicon'
+import { db } from './db'
 
 const app = express()
 app.use(express.json())
@@ -14,8 +19,12 @@ app.listen(port, () => {
   console.log(`Listening on port ${port}`)
 })
 
-app.get('/ping', (req, res) => {
-  return res.send('pong')
+app.get('/ping', (req, res, next) => {
+  db.query('SELECT 1;')
+    .then(() => {
+      res.send('pong')
+    })
+    .catch(next)
 })
 
 app.get('*', (req, res) => {
