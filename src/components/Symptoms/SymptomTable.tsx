@@ -33,9 +33,7 @@ export const SymptomTable = () => {
   };
   const [answers, setAnswers] = useState<AnswerType>(initialAnswers);
 
-  console.log("ANS", answers);
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onQuestionAnswered = (e: React.ChangeEvent<HTMLInputElement>) => {
     const el = e.target
     setAnswers({
       ...answers,
@@ -63,7 +61,7 @@ export const SymptomTable = () => {
                           name={row.id}
                           value={opt.value}
                           checked={checked}
-                          onChange={onChange}
+                          onChange={onQuestionAnswered}
                         />
                       </Label>
                     </td>
@@ -89,7 +87,7 @@ export const SymptomTable = () => {
                     name={q.id}
                     value={o.value}
                     checked={checked}
-                    onChange={onChange}
+                    onChange={onQuestionAnswered}
                   />
                 </Label>
               );
