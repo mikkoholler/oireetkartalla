@@ -1,9 +1,10 @@
 import { createGlobalStyle } from 'styled-components'
 
 export const colors = {
-  text: '#444',
-  bg: 'hsla(60, 50%, 50%)',
-}
+  text: "#444",
+  bg: "hsla(60, 50%, 50%)",
+  primary: "hsl(190, 60%, 40%)"
+};
 
 export const GlobalStyles = createGlobalStyle`
   body {

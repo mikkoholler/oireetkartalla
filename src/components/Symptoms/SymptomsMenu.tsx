@@ -4,6 +4,7 @@ import { SymptomTable } from '../Symptoms/SymptomTable'
 import { Login } from '../Auth/Login'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
+import { colors } from '../../GlobalStyles'
 
 interface Props {
   closeSymptomsMenu: () => void
@@ -80,6 +81,6 @@ const CloseButton = styled(Button)`
 `
 
 const SaveButton = styled(Button)`
-  background: hsl(190, 60%, 40%);
+  background: ${colors.primary};
   color: white;
 `

@@ -1,33 +1,77 @@
-import React from 'react'
-import styled from 'styled-components'
-import { symptomQuestions } from './questions'
-import { otherQuestions } from './questions'
+import React, { useState } from "react";
+import styled from "styled-components";
+import { symptomQuestions } from "./questions";
+import { otherQuestions } from "./questions";
+import { colors } from "../../GlobalStyles";
+
+type QuestionKey =
+  | "fever"
+  | "cough"
+  | "soreThroat"
+  | "shortOfBreath"
+  | "musclePain"
+  | "fatigue"
+  | "hasInfection"
+  | "hasBeenInContact"
+  | "isInRiskGroup";
+
+type AnswerType = {
+  [key in QuestionKey]: string;
+};
 
 export const SymptomTable = () => {
+  const initialAnswers: AnswerType = {
+    fever: "",
+    cough: "",
+    soreThroat: "",
+    shortOfBreath: "",
+    musclePain: "",
+    fatigue: "",
+    hasInfection: "",
+    hasBeenInContact: "",
+    isInRiskGroup: ""
+  };
+  const [answers, setAnswers] = useState<AnswerType>(initialAnswers);
+
+  console.log("ANS", answers);
+
+  const onChange = (e: React.ChangeEvent) => {
+    const el = e.target as HTMLInputElement;
+    setAnswers({
+      ...answers,
+      [el.name]: el.value
+    });
+  };
+
   return (
     <>
       <QuestionContainer>
         <h2>{symptomQuestions.title}</h2>
         <Table>
           <tbody>
-            <tr>
-              <th />
-              {symptomQuestions.options.map((option) => (
-                <th key={option.label}>{option.label}</th>
-              ))}
-            </tr>
+            {symptomQuestions.rows.map(row => (
+              <tr key={row.id}>
+                <td>{row.label}</td>
+                {symptomQuestions.options.map(opt => {
+                  const checked = answers[row.id as QuestionKey] === opt.value;
+                  return (
+                    <td key={opt.value}>
+                      <Label active={checked}>
+                        {opt.label}
+                        <input
+                          type="radio"
+                          name={row.id}
+                          value={opt.value}
+                          checked={checked}
+                          onChange={onChange}
+                        />
+                      </Label>
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
           </tbody>
-
-          {symptomQuestions.rows.map((row) => (
-            <tr>
-              <td>{row.label}</td>
-              {symptomQuestions.options.map((o) => (
-                <td key={o.value}>
-                  <input type="radio" name={row.label} value={o.value} />
-                </td>
-              ))}
-            </tr>
-          ))}
         </Table>
       </QuestionContainer>
 
@@ -35,12 +79,21 @@ export const SymptomTable = () => {
         <QuestionContainer>
           <h2>{q.title}</h2>
           <Options>
-            {q.options.map((o) => (
-              <label>
-                {o.label}
-                <input type="radio" name={q.title} value={o.value} />
-              </label>
-            ))}
+            {q.options.map(o => {
+              const checked = answers[q.id as QuestionKey] === o.value;
+              return (
+                <Label active={checked}>
+                  {o.label}
+                  <input
+                    type="radio"
+                    name={q.id}
+                    value={o.value}
+                    checked={checked}
+                    onChange={onChange}
+                  />
+                </Label>
+              );
+            })}
           </Options>
         </QuestionContainer>
       ))}
@@ -79,19 +132,26 @@ const Table = styled.table`
   }
 `
 
+interface LabelProps {
+  active: boolean;
+}
+
+const Label = styled.label<LabelProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  background: ${props => (props.active ? colors.primary : "transparent")};
+  color: ${props => (props.active ? "white" : colors.text)};
+  padding: 0.5rem;
+  border-radius: 3px;
+
+  input {
+    display: none;
+  }
+`;
+
 const Options = styled.div`
   display: flex;
-
-  label {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    flex: 1;
-    text-align: center;
-    justify-content: space-between;
-
-    input {
-      margin-top: 1rem;
-    }
-  }
-`
+`;

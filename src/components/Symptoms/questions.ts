@@ -15,17 +15,18 @@ export const symptomQuestions = {
     },
   ],
   rows: [
-    { label: 'Kuume' },
-    { label: 'Yskä' },
-    { label: 'Kurkkukipu' },
-    { label: 'Hengenahdistus' },
-    { label: 'Lihaskipu' },
-    { label: 'Väsymys' },
+    { id: 'fever', label: 'Kuume' },
+    { id: 'cough', label: 'Yskä' },
+    { id: 'soreThroat', label: 'Kurkkukipu' },
+    { id: 'shortOfBreath', label: 'Hengenahdistus' },
+    { id: 'musclePain', label: 'Lihaskipu' },
+    { id: 'fatigue', label: 'Väsymys' },
   ],
 }
 
 export const otherQuestions = [
   {
+    id: 'hasInfection',
     title: 'Onko sinulta testattu koronavirustanrunta?',
     options: [
       {
@@ -40,6 +41,7 @@ export const otherQuestions = [
     ],
   },
   {
+    id: 'hasBeenInContact',
     title:
       'Oletko ollut kontaktissa koronavirukseen sairastuneen tai sille altistuneen kanssa?',
     options: [
@@ -48,6 +50,7 @@ export const otherQuestions = [
     ],
   },
   {
+    id: 'isInRiskGroup',
     title: 'Kuulutko riskiryhmään?',
     options: [
       { label: 'Kyllä', value: 'yes' },
