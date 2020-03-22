@@ -6,10 +6,9 @@ const app = express()
 app.use(express.json())
 
 const port = process.env.PORT || 5000
-app.use(favicon(__dirname + '/build/favicon.ico'))
+app.use(favicon(path.resolve('./build/favicon.ico')))
 
-app.use(express.static(__dirname))
-app.use(express.static(path.join(__dirname, 'build')))
+app.use(express.static(path.resolve('./build')))
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`)
@@ -20,7 +19,7 @@ app.get('/ping', (req, res) => {
 })
 
 app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname + '/build/index.html'))
+  res.sendFile(path.resolve('./build/index.html'))
 })
 
 app.post('/answers', (req, res) => {
