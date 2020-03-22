@@ -1,21 +1,36 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import { SymptomTable } from "../Symptoms/SymptomTable";
+import { Login } from "../Auth/Login"
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
 
 interface Props {
   closeSymptomsMenu: () => void;
 }
 
 export const SymptomsMenu = ({ closeSymptomsMenu }: Props) => {
+  const [loggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    firebase.auth().onAuthStateChanged((user) => {
+      setLoggedIn(!!user);
+    });
+  });
+
   return (
     <Overlay>
-      <Container>
-        <SymptomTable />
-        <Buttons>
-          <CloseButton onClick={closeSymptomsMenu}>Sulje</CloseButton>
-          <SaveButton onClick={closeSymptomsMenu}>Tallenna</SaveButton>
-        </Buttons>
-      </Container>
+      { loggedIn
+        ? <Container>
+            <SymptomTable />
+            <Buttons>
+              <CloseButton onClick={closeSymptomsMenu}>Sulje</CloseButton>
+              <SaveButton onClick={closeSymptomsMenu}>Tallenna</SaveButton>
+            </Buttons>
+          </Container>
+        : <Container>
+          <Login />
+        </Container>
+      }
     </Overlay>
   );
 };
