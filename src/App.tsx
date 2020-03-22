@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from 'react'
 import './App.css'
 import GoogleMapReact from 'google-map-react'
-import { makeStyles } from '@material-ui/core/styles'
-import SpeedDial from '@material-ui/lab/SpeedDial'
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined'
-import SaveIcon from '@material-ui/icons/Save'
-import PrintIcon from '@material-ui/icons/Print'
-import ShareIcon from '@material-ui/icons/Share'
-import FavoriteIcon from '@material-ui/icons/Favorite'
-import EditIcon from '@material-ui/icons/Edit'
 import { SymptomsMenu } from './components/Symptoms/SymptomsMenu'
 import styled from 'styled-components'
 import firebase from 'firebase'
 import { getKNearestLocations, LocationInfo } from './utils/postal'
+import { useGeolocation } from './useGeolocation'
+import { GeolocationButton } from './GeolocationButton'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -25,68 +17,27 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig)
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    height: 380,
-    transform: 'translateZ(0px)',
-    flexGrow: 1,
-  },
-  speedDial: {
-    position: 'absolute',
-    bottom: theme.spacing(2),
-    right: theme.spacing(2),
-  },
-}))
-
-const actions = [
-  { icon: <FileCopyIcon />, name: 'Copy' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
-  { icon: <FavoriteIcon />, name: 'Like' },
-]
-
-const DEFAULT_ZOOM_LEVEL = 11
-
 function App() {
-  const classes = useStyles()
-  const [open, setOpen] = useState(false)
-  const [hasPosition, setHasPosition] = useState(false)
-  const [latitude, setLatitude] = useState(66.052978)
-  const [longitude, setLongitude] = useState(26.18439)
-  const [zoomLevel, setZoomLevel] = useState(5.25)
-  const [locationSuggestions, setLocationSuggestions] = useState<
+  const [mapCoordinates, setMapCoordinates] = useState({
+    lat: 66.052978,
+    lng: 26.18439,
+  })
+  const [zoomLevel] = useState(5.25)
+  const [, setLocationSuggestions] = useState<
     LocationInfo[]
   >([])
 
+  const [geolocationState, position, getCurrentLocation] = useGeolocation()
+
   useEffect(() => {
-    if (navigator.geolocation && !hasPosition) {
-      setHasPosition(true)
-      navigator.geolocation.getCurrentPosition(
-        (pos) => {
-          setLatitude(pos.coords.latitude)
-          setLongitude(pos.coords.longitude)
-          setZoomLevel(DEFAULT_ZOOM_LEVEL)
-        },
-        (e) => {
-          console.error(e)
-        },
-        { timeout: 5000 }
-      )
+    if (position) {
+      setMapCoordinates({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude,
+      })
+      setLocationSuggestions(getKNearestLocations(position.coords.latitude, position.coords.longitude, 5))
     }
-
-    if (hasPosition && latitude && longitude) {
-      setLocationSuggestions(getKNearestLocations(latitude, longitude, 5))
-    }
-  }, [latitude, longitude, hasPosition])
-
-  const handleOpen = () => {
-    setOpen(true)
-  }
-
-  const handleClose = () => {
-    setOpen(false)
-  }
+  }, [position])
 
   const [showSymptomsMenu, toggleSymptomsMenu] = useState<boolean>(false)
 
@@ -103,25 +54,13 @@ function App() {
         options={{ fullscreenControl: false }}
         bootstrapURLKeys={{ key: 'AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw' }}
         zoom={zoomLevel}
-        center={{ lat: latitude, lng: longitude }}
+        center={mapCoordinates}
       />
-      <SpeedDial
-        ariaLabel="SpeedDial openIcon example"
-        className={classes.speedDial}
-        icon={<SpeedDialIcon openIcon={<EditIcon />} />}
-        onClose={handleClose}
-        onOpen={handleOpen}
-        open={open}
-      >
-        {actions.map((action) => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            onClick={handleClose}
-          />
-        ))}
-      </SpeedDial>
+      <GeolocationButton
+        state={geolocationState}
+        position={position}
+        getCurrentLocation={getCurrentLocation}
+      />
     </div>
   )
 }
