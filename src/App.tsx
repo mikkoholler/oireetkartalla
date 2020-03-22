@@ -95,7 +95,7 @@ function App() {
         bootstrapURLKeys={{ key: 'AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw' }}
         zoom={zoomLevel}
         center={{ lat: latitude, lng: longitude }}
-      ></GoogleMapReact>
+      />
       <SpeedDial
         ariaLabel="SpeedDial openIcon example"
         className={classes.speedDial}
