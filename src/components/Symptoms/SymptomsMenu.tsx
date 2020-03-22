@@ -5,6 +5,7 @@ import { Login } from '../Auth/Login'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
 import { colors } from '../../GlobalStyles'
+import { postAnswers } from '../../BackendClient'
 
 interface Props {
   closeSymptomsMenu: () => void
@@ -30,6 +31,10 @@ export const SymptomsMenu = ({ closeSymptomsMenu }: Props) => {
     isInRiskGroup: ""
   };
   const [answers, setAnswers] = useState<AnswerType>(initialAnswers);
+  const onSave = () => {
+    closeSymptomsMenu()
+    postAnswers(answers)
+  }
 
   return (
     <Overlay>
@@ -38,7 +43,7 @@ export const SymptomsMenu = ({ closeSymptomsMenu }: Props) => {
           <SymptomTable answers={answers} onAnswersUpdated={setAnswers} />
           <Buttons>
             <CloseButton onClick={closeSymptomsMenu}>Sulje</CloseButton>
-            <SaveButton onClick={closeSymptomsMenu}>Tallenna</SaveButton>
+            <SaveButton onClick={onSave}>Tallenna</SaveButton>
           </Buttons>
         </Container>
       ) : (
