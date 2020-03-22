@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { SymptomTable } from '../Symptoms/SymptomTable'
+import { SymptomTable, AnswerType } from '../Symptoms/SymptomTable'
 import { Login } from '../Auth/Login'
 import * as firebase from 'firebase/app'
 import 'firebase/auth'
@@ -18,11 +18,24 @@ export const SymptomsMenu = ({ closeSymptomsMenu }: Props) => {
     })
   })
 
+  const initialAnswers: AnswerType = {
+    fever: "",
+    cough: "",
+    soreThroat: "",
+    shortOfBreath: "",
+    musclePain: "",
+    fatigue: "",
+    hasInfection: "",
+    hasBeenInContact: "",
+    isInRiskGroup: ""
+  };
+  const [answers, setAnswers] = useState<AnswerType>(initialAnswers);
+
   return (
     <Overlay>
       {loggedIn ? (
         <Container>
-          <SymptomTable />
+          <SymptomTable answers={answers} onAnswersUpdated={setAnswers} />
           <Buttons>
             <CloseButton onClick={closeSymptomsMenu}>Sulje</CloseButton>
             <SaveButton onClick={closeSymptomsMenu}>Tallenna</SaveButton>

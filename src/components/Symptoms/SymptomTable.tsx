@@ -4,7 +4,7 @@ import { symptomQuestions } from "./questions";
 import { otherQuestions } from "./questions";
 import { colors } from "../../GlobalStyles";
 
-type QuestionKey =
+export type QuestionKey =
   | "fever"
   | "cough"
   | "soreThroat"
@@ -15,30 +15,23 @@ type QuestionKey =
   | "hasBeenInContact"
   | "isInRiskGroup";
 
-type AnswerType = {
+export type AnswerType = {
   [key in QuestionKey]: string;
 };
 
-export const SymptomTable = () => {
-  const initialAnswers: AnswerType = {
-    fever: "",
-    cough: "",
-    soreThroat: "",
-    shortOfBreath: "",
-    musclePain: "",
-    fatigue: "",
-    hasInfection: "",
-    hasBeenInContact: "",
-    isInRiskGroup: ""
-  };
-  const [answers, setAnswers] = useState<AnswerType>(initialAnswers);
+export interface SymptomTableProps {
+  answers: AnswerType
+  onAnswersUpdated(answers: AnswerType): void
+}
 
+export const SymptomTable: React.FC<SymptomTableProps> = props => {
+  const { answers, onAnswersUpdated } = props
   const onQuestionAnswered = (e: React.ChangeEvent<HTMLInputElement>) => {
     const el = e.target
-    setAnswers({
+    onAnswersUpdated({
       ...answers,
       [el.name]: el.value
-    });
+    })
   };
 
   return (
