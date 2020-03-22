@@ -44,7 +44,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "heroku-postbuild": "npm run build",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prettier-check": "prettier --check --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,css,scss,md}'",
+    "prettier-write": "prettier --write --ignore-path .gitignore '**/*.{js,jsx,json,ts,tsx,css,scss,md}'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -63,7 +65,10 @@
   },
   "devDependencies": {
     "@types/google-map-react": "^1.1.5",
+    "husky": "^4.2.3",
+    "lint-staged": "^10.0.8",
     "node-sass": "^4.13.1",
+    "prettier": "^2.0.1",
     "ts-node": "^8.7.0"
   }
 }
