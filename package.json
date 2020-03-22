@@ -38,7 +38,7 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "server": "tsc server.ts --outDir dist && node server.js",
+    "server": "tsc server.ts --outDir dist && node dist/server.js",
     "start": "npm run server",
     "dev": "concurrently --kill-others --names server-build,server,frontend --prefix-colors black.bgGreen,black.bgBlue,black.bgYellow \"tsc -w --outDir dist server.ts\" \"nodemon ./dist/server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
