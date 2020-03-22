@@ -3,6 +3,6 @@ import * as pgp from 'pg-promise'
 const dbClient = pgp()
 
 export const db = dbClient({
-  connectionString: process.env.DB_URL,
+  connectionString: process.env.DATABASE_URL,
   max: 30,
 })
