@@ -1,0 +1,15 @@
+version: "3.7"
+volumes:
+  pg_data: {}
+services:
+  postgres:
+    image: postgres:11.3-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data/pgdata
+    environment:
+      POSTGRES_USER: oireet
+      POSTGRES_PASSWORD: kartalla
+      POSTGRES_DB: oireetkartalla
+      PGDATA: /var/lib/postgresql/data/pgdata
