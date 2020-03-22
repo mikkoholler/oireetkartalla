@@ -92,6 +92,7 @@ function App() {
       </Navi>
 
       <GoogleMapReact
+        options={{ fullscreenControl: false }}
         bootstrapURLKeys={{ key: 'AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw' }}
         zoom={zoomLevel}
         center={{ lat: latitude, lng: longitude }}
