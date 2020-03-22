@@ -3,6 +3,7 @@ import * as path from 'path'
 import * as favicon from 'express-favicon'
 
 const app = express()
+app.use(express.json())
 
 const port = process.env.PORT || 5000
 app.use(favicon(__dirname + '/build/favicon.ico'))
@@ -20,4 +21,9 @@ app.get('/ping', (req, res) => {
 
 app.get('*', (req, res) => {
   res.sendFile(path.join(__dirname + '/build/index.html'))
+})
+
+app.post('/answers', (req, res) => {
+  console.log('Got answers', req.body)
+  res.send()
 })
