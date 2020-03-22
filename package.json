@@ -38,9 +38,9 @@
   },
   "scripts": {
     "tsc": "tsc",
-    "server": "tsc server.ts && node server.js",
+    "server": "tsc server.ts --outDir dist && node server.js",
     "start": "npm run server",
-    "dev": "concurrently --kill-others --names server-build,server,frontend --prefix-colors black.bgGreen,black.bgBlue,black.bgYellow \"tsc -w server.ts\" \"nodemon ./server.js\" \"react-scripts start\"",
+    "dev": "concurrently --kill-others --names server-build,server,frontend --prefix-colors black.bgGreen,black.bgBlue,black.bgYellow \"tsc -w --outDir dist server.ts\" \"nodemon ./dist/server.js\" \"react-scripts start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "heroku-postbuild": "npm run build",
