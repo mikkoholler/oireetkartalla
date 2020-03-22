@@ -14,6 +14,7 @@ import EditIcon from '@material-ui/icons/Edit'
 import { SymptomsMenu } from './components/Symptoms/SymptomsMenu'
 import styled from 'styled-components'
 import firebase from 'firebase'
+import { getKNearestLocations, LocationInfo } from './utils/postal'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
@@ -54,6 +55,9 @@ function App() {
   const [latitude, setLatitude] = useState(66.052978)
   const [longitude, setLongitude] = useState(26.18439)
   const [zoomLevel, setZoomLevel] = useState(5.25)
+  const [locationSuggestions, setLocationSuggestions] = useState<
+    LocationInfo[]
+  >([])
 
   useEffect(() => {
     if (navigator.geolocation && !hasPosition) {
@@ -69,6 +73,10 @@ function App() {
         },
         { timeout: 5000 }
       )
+    }
+
+    if (hasPosition && latitude && longitude) {
+      setLocationSuggestions(getKNearestLocations(latitude, longitude, 5))
     }
   }, [latitude, longitude, hasPosition])
 
