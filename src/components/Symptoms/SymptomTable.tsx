@@ -1,7 +1,7 @@
-import React from "react";
-import styled from "styled-components";
-import { symptomQuestions } from "./questions";
-import { otherQuestions } from "./questions";
+import React from 'react'
+import styled from 'styled-components'
+import { symptomQuestions } from './questions'
+import { otherQuestions } from './questions'
 
 export const SymptomTable = () => {
   return (
@@ -12,16 +12,16 @@ export const SymptomTable = () => {
           <tbody>
             <tr>
               <th />
-              {symptomQuestions.options.map(option => (
+              {symptomQuestions.options.map((option) => (
                 <th key={option.label}>{option.label}</th>
               ))}
             </tr>
           </tbody>
 
-          {symptomQuestions.rows.map(row => (
+          {symptomQuestions.rows.map((row) => (
             <tr>
               <td>{row.label}</td>
-              {symptomQuestions.options.map(o => (
+              {symptomQuestions.options.map((o) => (
                 <td key={o.value}>
                   <input type="radio" name={row.label} value={o.value} />
                 </td>
@@ -31,11 +31,11 @@ export const SymptomTable = () => {
         </Table>
       </QuestionContainer>
 
-      {otherQuestions.map(q => (
+      {otherQuestions.map((q) => (
         <QuestionContainer>
           <h2>{q.title}</h2>
           <Options>
-            {q.options.map(o => (
+            {q.options.map((o) => (
               <label>
                 {o.label}
                 <input type="radio" name={q.title} value={o.value} />
@@ -45,8 +45,8 @@ export const SymptomTable = () => {
         </QuestionContainer>
       ))}
     </>
-  );
-};
+  )
+}
 
 const QuestionContainer = styled.div`
   padding: 1rem;
@@ -55,7 +55,7 @@ const QuestionContainer = styled.div`
   &:nth-child(even) {
     background: #f5f5f5;
   }
-`;
+`
 
 const Table = styled.table`
   width: 100%;
@@ -77,7 +77,7 @@ const Table = styled.table`
   input {
     padding: 0.5rem;
   }
-`;
+`
 
 const Options = styled.div`
   display: flex;
@@ -94,4 +94,4 @@ const Options = styled.div`
       margin-top: 1rem;
     }
   }
-`;
+`

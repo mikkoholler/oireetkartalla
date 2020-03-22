@@ -1,98 +1,98 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
-import GoogleMapReact from "google-map-react";
-import { makeStyles } from "@material-ui/core/styles";
-import SpeedDial from "@material-ui/lab/SpeedDial";
-import SpeedDialIcon from "@material-ui/lab/SpeedDialIcon";
-import SpeedDialAction from "@material-ui/lab/SpeedDialAction";
-import FileCopyIcon from "@material-ui/icons/FileCopyOutlined";
-import SaveIcon from "@material-ui/icons/Save";
-import PrintIcon from "@material-ui/icons/Print";
-import ShareIcon from "@material-ui/icons/Share";
-import FavoriteIcon from "@material-ui/icons/Favorite";
-import EditIcon from "@material-ui/icons/Edit";
-import { SymptomsMenu } from "./components/Symptoms/SymptomsMenu";
-import styled from "styled-components";
-import firebase from 'firebase';
+import React, { useState, useEffect } from 'react'
+import './App.css'
+import GoogleMapReact from 'google-map-react'
+import { makeStyles } from '@material-ui/core/styles'
+import SpeedDial from '@material-ui/lab/SpeedDial'
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined'
+import SaveIcon from '@material-ui/icons/Save'
+import PrintIcon from '@material-ui/icons/Print'
+import ShareIcon from '@material-ui/icons/Share'
+import FavoriteIcon from '@material-ui/icons/Favorite'
+import EditIcon from '@material-ui/icons/Edit'
+import { SymptomsMenu } from './components/Symptoms/SymptomsMenu'
+import styled from 'styled-components'
+import firebase from 'firebase'
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
   authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
   projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
-  appId: process.env.REACT_APP_FIREBASE_APP_ID
-};
+  appId: process.env.REACT_APP_FIREBASE_APP_ID,
+}
 
-firebase.initializeApp(firebaseConfig);
+firebase.initializeApp(firebaseConfig)
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles((theme) => ({
   root: {
     height: 380,
-    transform: "translateZ(0px)",
-    flexGrow: 1
+    transform: 'translateZ(0px)',
+    flexGrow: 1,
   },
   speedDial: {
-    position: "absolute",
+    position: 'absolute',
     bottom: theme.spacing(2),
-    right: theme.spacing(2)
-  }
-}));
+    right: theme.spacing(2),
+  },
+}))
 
 const actions = [
-  { icon: <FileCopyIcon />, name: "Copy" },
-  { icon: <SaveIcon />, name: "Save" },
-  { icon: <PrintIcon />, name: "Print" },
-  { icon: <ShareIcon />, name: "Share" },
-  { icon: <FavoriteIcon />, name: "Like" }
-];
+  { icon: <FileCopyIcon />, name: 'Copy' },
+  { icon: <SaveIcon />, name: 'Save' },
+  { icon: <PrintIcon />, name: 'Print' },
+  { icon: <ShareIcon />, name: 'Share' },
+  { icon: <FavoriteIcon />, name: 'Like' },
+]
 
-const DEFAULT_ZOOM_LEVEL = 11;
+const DEFAULT_ZOOM_LEVEL = 11
 
 function App() {
-  const classes = useStyles();
-  const [open, setOpen] = useState(false);
-  const [hasPosition, setHasPosition] = useState(false);
-  const [latitude, setLatitude] = useState(66.052978);
-  const [longitude, setLongitude] = useState(26.184390);
+  const classes = useStyles()
+  const [open, setOpen] = useState(false)
+  const [hasPosition, setHasPosition] = useState(false)
+  const [latitude, setLatitude] = useState(66.052978)
+  const [longitude, setLongitude] = useState(26.18439)
   const [zoomLevel, setZoomLevel] = useState(5.25)
 
   useEffect(() => {
     if (navigator.geolocation && !hasPosition) {
-      setHasPosition(true);
+      setHasPosition(true)
       navigator.geolocation.getCurrentPosition(
-        pos => {
-          setLatitude(pos.coords.latitude);
-          setLongitude(pos.coords.longitude);
-          setZoomLevel(DEFAULT_ZOOM_LEVEL);
+        (pos) => {
+          setLatitude(pos.coords.latitude)
+          setLongitude(pos.coords.longitude)
+          setZoomLevel(DEFAULT_ZOOM_LEVEL)
         },
         (e) => {
-          console.error(e);
+          console.error(e)
         },
         { timeout: 5000 }
-      );
+      )
     }
-  }, [latitude, longitude, hasPosition]);
+  }, [latitude, longitude, hasPosition])
 
   const handleOpen = () => {
-    setOpen(true);
-  };
+    setOpen(true)
+  }
 
   const handleClose = () => {
-    setOpen(false);
-  };
+    setOpen(false)
+  }
 
-  const [showSymptomsMenu, toggleSymptomsMenu] = useState<boolean>(false);
+  const [showSymptomsMenu, toggleSymptomsMenu] = useState<boolean>(false)
 
-  const onClick = () => toggleSymptomsMenu(!showSymptomsMenu);
+  const onClick = () => toggleSymptomsMenu(!showSymptomsMenu)
 
   return (
-    <div className="App" style={{ height: "100vh", width: "100%" }}>
+    <div className="App" style={{ height: '100vh', width: '100%' }}>
       {showSymptomsMenu && <SymptomsMenu closeSymptomsMenu={onClick} />}
       <Navi>
         <div onClick={() => onClick()}>Omat oireeni</div>
       </Navi>
 
       <GoogleMapReact
-        bootstrapURLKeys={{ key: "AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw" }}
+        bootstrapURLKeys={{ key: 'AIzaSyAebNmxEjr0MHqmQdbRAxSPpUF4n3UGwRw' }}
         zoom={zoomLevel}
         center={{ lat: latitude, lng: longitude }}
       ></GoogleMapReact>
@@ -104,7 +104,7 @@ function App() {
         onOpen={handleOpen}
         open={open}
       >
-        {actions.map(action => (
+        {actions.map((action) => (
           <SpeedDialAction
             key={action.name}
             icon={action.icon}
@@ -114,7 +114,7 @@ function App() {
         ))}
       </SpeedDial>
     </div>
-  );
+  )
 }
 
 const Navi = styled.div`
@@ -130,10 +130,10 @@ const Navi = styled.div`
     box-sizing: border-box;
     border-radius: 10px;
     background: hsla(0, 0%, 100%, 0.9);
-    font-family: "Roboto";
+    font-family: 'Roboto';
     text-transform: uppercase;
     box-shadow: 0 5px 15px -5px rgba(0, 0, 0, 0.1);
   }
-`;
+`
 
-export default App;
+export default App

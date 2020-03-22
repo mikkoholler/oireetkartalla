@@ -1,9 +1,9 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components'
 
 export const colors = {
-  text: "#444",
-  bg: "hsla(60, 50%, 50%)"
-};
+  text: '#444',
+  bg: 'hsla(60, 50%, 50%)',
+}
 
 export const GlobalStyles = createGlobalStyle`
   body {
@@ -25,4 +25,4 @@ export const GlobalStyles = createGlobalStyle`
     letter-spacing: 0.25px;
     color: ${colors.text};
   }
-  `;
+  `
